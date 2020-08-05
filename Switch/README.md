@@ -22,3 +22,12 @@ also, in ./SwitchData/Data, there will be more directory where the raw informati
 check in case something went wrong.
 
 thus don't forget to use make clean once the raw data is unneeded.
+
+# Notice
+
+if the command prompt is too small, telnet will sometimes return ----more---- instead of the 
+whole detail of the switch, in this case and it will cause the program not to work.
+it is recommanded to have your command prompt as long as possible in order to avoid such issues.
+
+sometimes, the delay for the switch to enter will be too long for the program to receive the whole
+information, in this case, it is recommended to increase the timeout delay in the ./src/getSwitch.sh.
