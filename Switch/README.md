@@ -11,11 +11,14 @@ https://sourceforge.net/projects/expect/
 
 ## Usage
 
-after putting the Mac address of the switchs you want to check, you will need to run the make
-command inside the local directory, yo will then be prompted your username and password in
-your local network.
-the program will then compile a csv file with the needed information in the Rendu repertory, with
+after putting the Mac address of the switchs you want to check in the feedMeSwitchs.txt file, 
+you will need to run the make command inside the local directory, you will then be prompted 
+your username and password in your local network.
+
+the program will compile a csv file with the needed information in the Rendu repertory, with
 the name of the switch as its name.
+
 also, in ./SwitchData/Data, there will be more directory where the raw information is given to
 check in case something went wrong.
+
 thus don't forget to use make clean once the raw data is unneeded.
