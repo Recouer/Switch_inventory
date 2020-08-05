@@ -26,5 +26,5 @@ thus don't forget to use make clean once the raw data is unneeded.
 # Notice
 
 if the command prompt is too small, telnet will sometimes return ----more---- instead of the 
-whole detail of the switch, in this case and it will cause the program not to work.
+whole detail of the switch, and it will cause the program not to work.
 it is recommanded to have your command prompt as long as possible in order to avoid such issues.
