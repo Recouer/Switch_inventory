@@ -7,22 +7,24 @@ PASS=$3
 DATA=./SwitchData/tmp/temp.txt
 PORT_INFO=./SwitchData/tmp/switchPort.txt
 SWITCH_INFO=./SwitchData/tmp/switch.txt
+VLAN_INFO=./SwitchData/tmp/switchVlan.txt
 
 ./src/getData.sh $SERVER $USER $PASS "Show interface status" > $DATA
- > $PORT_INFO
-
-
 tail --lines=+14 $DATA > $SWITCH_INFO
 
+> $PORT_INFO
 
 PORTS=($(cut -b 1-6 $DATA))
 PORTS=("${PORTS[@]:13}")
 
-if (( ${#PORTS[@]} > 30 )); then
+
+if (( ${#PORTS[@]} > 30 ))
+then
     n=5
 else
     n=3
 fi
+
 
 name=($(cut -b 1-$b $SWITCH_INFO))
 str="${name[-1]}"
@@ -48,3 +50,22 @@ do
     done
 done
 
+
+echo "" >> $VLAN_INFO
+
+./src/getData.sh $SERVER $USER $PASS "Show vlan" > $DATA
+tail --lines=+15 $DATA > $VLAN_INFO
+
+cat $VLAN_INFO > ./SwitchData/Data/$M_name/switchVlanRaw.txt
+
+vlan=($(cut -b 1-5 $VLAN_INFO))
+name=($(cut -b 6-25 $VLAN_INFO))
+
+
+for ((i=0;i<${#vlan[@]};i++))
+do
+    if [[ ${vlan[$i]} == "VLAN" ]]
+    then
+	echo " ${vlan[$i]} ; ${name[$i]} " >> $VLAN_INFO
+    fi
+done
