@@ -8,17 +8,18 @@ show_data() {
     host=$1
     cmd=$2
 expect << EOF
-set timeout 1
+set timeout 10
 set host $host
 set user $user
 set pass $pass
 spawn telnet $host
-expect "Username:"
+expect "username:"
 send "$user\r"
-expect "Password:"
+expect "password:"
 send "$pass\r"
 expect -re ".*#"
 send "$cmd\r"
+send "\r"
 expect -re ".*#"
 send "exit\r"
 EOF
