@@ -1,0 +1,19 @@
+ ; Description ; Vlan ; Mac active ; Adresse IP ; Marque ; Hostname ; Service ; Contact ; Tel ; Nom 
+
+ 
+ vlan ; name 
+ ---- ; --------------------default 
+ 1 ; VLAN0003 
+ 3 ; VLAN0004 
+ 4 ; VLAN0005 
+ 5 ; VLAN0006 
+ 6 ; DT 
+ 56 ; Cameras 
+ 70 ; Biomed-A2I1S52 
+ 146 ; ToIP-A2ISI52 
+ 246 ; bidon 
+ 1000 ; fddi-default 
+ 1002 ; token-ring-default 
+ 1003 ; fddinet-default 
+ 1004 ; trnet-default 
+ 1005 ; Type 
