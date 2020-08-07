@@ -3,48 +3,51 @@
 SERVER=$1
 USER=$2
 PASS=$3
+PROTOCOL=$4
+portsNb=$5
+portsName=$6
+portsNameSize=$7
 
 DATA=./SwitchData/tmp/temp.txt
 PORT_INFO=./SwitchData/tmp/switchPort.txt
 SWITCH_INFO=./SwitchData/tmp/switch.txt
+SWITCH_RAW=./SwitchData/Data/switchRaw.txt
 VLAN_INFO=./SwitchData/tmp/switchVlan.txt
 
-./src/getData.sh $SERVER $USER $PASS "Show interface status" > $DATA
-tail --lines=+14 $DATA > $SWITCH_INFO
+
+./src/getData.sh $SERVER $USER $PASS $PROTOCOL "Show interface status" > $DATA
+
+cat $DATA > $SWITCH_RAW
+grep "$portsName" $DATA > $SWITCH_INFO
+grep "$portsName" $SWITCH_INFO > $DATA
+PORTS=($(cut -b 1-$portsNameSize $DATA))
+PORTS=("${PORTS[@]:0:$portsNb}")
+
 
 > $PORT_INFO
 
-PORTS=($(cut -b 1-6 $DATA))
-PORTS=("${PORTS[@]:13}")
 
 
-if (( ${#PORTS[@]} > 30 ))
-then
-    n=5
-else
-    n=3
-fi
-
-
-name=($(cut -b 1-$b $SWITCH_INFO))
+name=($(grep ".*#" $SWITCH_RAW))
+echo $name >> $SWITCH_INFO
 str="${name[-1]}"
 M_name="${str%\#*}"
 mkdir ./SwitchData/Data/$M_name
 > ./SwitchData/Data/$M_name/switchPortRaw.txt
 
 
-for ((i=0;i<$(expr ${#PORTS[@]} - $n);i++))
+for ((i=0;i<$(expr ${#PORTS[@]});i++))
 do
     echo "Show mac address-table ${PORTS[$i]}"
-    ./src/getData.sh $SERVER $USER $PASS "Show mac address-table interface ${PORTS[$i]}" > $DATA
-
+    ./src/getData.sh $SERVER $USER $PASS $PROTOCOL "Show mac address-table interface ${PORTS[$i]}" > $DATA
+    
     cat $DATA >> ./SwitchData/Data/$M_name/switchPortRaw.txt
     
     IFS=$'\n'
-    data=($(cat $DATA))
+    data=($(grep ${PORTS[$i]} $DATA))
     IFS=' '
     
-    for ((j=16;j<$(expr ${#data[@]} - 2);j++))
+    for ((j=1;j<${#data[@]};j++))
     do
 	echo ${data[$j]} >> $PORT_INFO
     done
@@ -53,19 +56,20 @@ done
 
 echo "" >> $VLAN_INFO
 
-./src/getData.sh $SERVER $USER $PASS "Show vlan" > $DATA
-tail --lines=+15 $DATA > $VLAN_INFO
+./src/getData.sh $SERVER $USER $PASS $PROTOCOL "Show vlan" > $DATA
+grep 'active' $DATA > $VLAN_INFO
+grep 'act/unsup' $DATA >> $VLAN_INFO
 
-cat $VLAN_INFO > ./SwitchData/Data/$M_name/switchVlanRaw.txt
+cat $DATA > ./SwitchData/Data/$M_name/switchVlanRaw.txt
 
-vlan=($(cut -b 1-5 $VLAN_INFO))
-name=($(cut -b 6-25 $VLAN_INFO))
 
+vlan=($(cut -b 1-5 $VLAN_INFO | tr -d '\r' | tr -d '\n'))
+name=($(cut -b 6-25 $VLAN_INFO | tr -d '\r' | tr -d '\n'))
+
+echo " vlan ; name "> $VLAN_INFO
 
 for ((i=0;i<${#vlan[@]};i++))
 do
-    if [[ ${vlan[$i]} == "VLAN" ]]
-    then
-	echo " ${vlan[$i]} ; ${name[$i]} " >> $VLAN_INFO
-    fi
+    echo " ${vlan[$i]} ; ${name[$i]} " >> $VLAN_INFO
 done
+

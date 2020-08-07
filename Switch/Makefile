@@ -4,5 +4,16 @@
 switch:
 	./src/script.sh
 
-clean:
-	rm -r ./SwitchData/Data
+merge:
+	./src/merge.sh
+
+
+
+remove_data:
+	rm -r ./SwitchData/Data/*
+	rm *~
+
+remove_all:	remove_data
+	rm -r ./Rendu/*
+	rm -r ./SwitchData/tmp/*
+	> feedMeSwitchs.txt
