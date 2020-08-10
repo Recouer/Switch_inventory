@@ -6,12 +6,13 @@ SWITCH_PORT=./SwitchData/tmp/switchPort.txt
 SWITCH_VLAN=./SwitchData/tmp/switchVlan.txt
 TEMP=./SwitchData/tmp/temp.txt
 
-portsNb=$1
-portsName=$2
-portsNameSize=$3
+switch=$1
+portsNb=$2
+portsName=$3
+portsNameSize=$4
 b="${b:-29}"
 
-echo $portsNb $portsName $portsNameSize
+
 
 # get the data from the extracted files
 IFS=$'\n'
@@ -40,15 +41,15 @@ RENDU=./Rendu/$M_name.csv
 
 
 # create the heading of the file
+echo "$M_name ; $switch" >> $RENDU
 echo " ; Description ; Vlan ; Mac active ; Adresse IP ; Marque ; Hostname ; Service ; Contact ; Tel ; Nom " > $RENDU
-echo "$M_name" >> $RENDU
 
 
 # print the formated data inside the file
 for ((i=0;i<${#port[@]};i++))
 do
     a=1
-    for ((j=0;j<$portsNb;j++))
+    for ((j=0;j<${#p_port[@]};j++))
     do
 	if [[ "${port[$i]}" == "${p_port[$j]}" ]]
 	then

@@ -1,5 +1,7 @@
-.PHONY: switch clean
+.PHONY: switch clean range clean_data clean_all
 
+MIN=-1
+MAX=-1
 
 switch:
 	./src/script.sh
@@ -8,12 +10,13 @@ merge:
 	./src/merge.sh
 
 
-
-remove_data:
+clean_data:
 	rm -r ./SwitchData/Data/*
+	rm ./SwitchData/tmp/*
+	rm ./src/*~
 	rm *~
 
-remove_all:	remove_data
+clean_all:	remove_data
 	rm -r ./Rendu/*
 	rm -r ./SwitchData/tmp/*
 	> feedMeSwitchs.txt

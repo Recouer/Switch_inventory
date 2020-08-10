@@ -36,7 +36,6 @@ case $prot in
 	;;
     "ssh")
 	IFS=$'\r'
-	show_data_ssh
 	bin=($(show_data_ssh | tr -d '\n'))
 	IFS=' '
 	;;

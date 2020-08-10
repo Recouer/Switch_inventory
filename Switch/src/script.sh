@@ -20,27 +20,23 @@ do
     # get the ip addresses from the ./feedMeSwitchs.txt file in which the data will be
     # processed
     switchs=($(cat ./feedMeSwitchs.txt))
-    #> ./feedMeSwitchs.txt
+    > ./feedMeSwitchs.txt
     for switch in ${switchs[@]}
     do
 	# check wether the user managed to connect to the switch using a given protocol
 	# and will act accordingly depending on the answer
 	check=$(./src/checkConnect.sh $switch $user $protocol)
-	echo $check
+	echo $check $switch
 	case "$check" in
 	    "connectionAccepted")
 
 		# if the user managed to identify themselves using the given protocol, the data
 		# will then be processed using the setData.sh and dataFormat.sh script, and
 		# the raw data will be stored in another directory
+		./src/getConfig.sh $switch $user $pass $protocol 1
 		SC=($(./src/getConfig.sh $switch $user $pass $protocol))
-		if [[ "Switch not Registered" == $SC ]]
-		then
-		    echo "ble"
-		    exit
-		fi
-		./src/setData.sh $switch $user $pass $protocol ${SC[0]} ${SC[1]} ${SC[2]}
-		./src/dataFormat.sh ${SC[0]} ${SC[1]} ${SC[2]}
+		./src/setData.sh $switch $user $pass $protocol ${SC[1]} ${SC[2]} ${SC[3]}
+		./src/dataFormat.sh ${SC[0]} ${SC[1]} ${SC[2]} ${SC[3]}
 		
 		name=($(cut -b 1-$b $SWITCH))
 		str="${name[-1]}"
@@ -53,11 +49,12 @@ do
 		;;
 	
 	    "connectionRefused")
-		#echo $switch >> ./feedMeSwitchs.txt
+		echo $switch >> ./feedMeSwitchs.txt
 		#echo " $switch ; Connection Refused " > ./Rendu/$switch.csv
 		;;
 	
 	    "connectionTimedOut")
+		echo $switch >> ./feedMeSwitchs.txt
 		#echo " $switch ; Connection Timed Out " > ./Rendu/$switch.csv
 		;;
 	esac
