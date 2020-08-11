@@ -49,3 +49,18 @@ do
 	esac
     done
 done
+
+> ./Result/leftover.txt
+
+switchs=($(cat ./feedMeSwitchs.txt))
+for switch in ${switchs[@]}
+do
+    ping $switch -W 5 -c 1 > $DATA
+    status=$(grep "0 received" $DATA)
+    if [[ -z "$status" ]]
+    then
+	echo "$switch ; signal Received" > ./Result/leftOver.csv
+    else
+	echo "$switch ; no signal Received" > ./Result/leftOver.csv
+    fi
+done
