@@ -37,7 +37,7 @@ then
     read -p "portsName:" portsName
     portsNameSize=$(expr ${#portsName} + 2)
 
-    sed -i "23 a get_switch_data \"$switchName\" \"$portsNb\" \"$portsName\" \"$portsNameSize\"" ./src/getConfig.sh
+    sed -i "24 a get_switch_data \"$switchName\" \"$portsNb\" \"$portsName\" \"$portsNameSize\"" ./src/getConfig.sh
 fi
 
 if [[ -z $5 ]]

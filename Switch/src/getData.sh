@@ -9,7 +9,7 @@ cmd=$5
 # function used for giving commands to the switch using telnet protocol
 show_data_telnet() {
 expect << EOF
-set timeout 4
+set timeout 10
 set host $host
 set user $user
 set pass $pass
@@ -30,15 +30,15 @@ EOF
 # function used for giving commands to the switch using ssh protocol
 show_data_ssh() {
 expect << EOF
-set timeout 4
+set timeout 10
 set host $host
 set user $user
 set pass $pass
 spawn ssh  $user@$host
-expect "?"
-send "yes"
-expect "password:"
-send "$pass\r"
+expect { 
+       "?assword:"     { send "$pass\r" }
+       "Are you sure"  { send "yes" }
+}
 expect -re ".*#"
 send "$cmd\r"
 expect {
