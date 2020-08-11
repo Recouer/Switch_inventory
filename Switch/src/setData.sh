@@ -11,7 +11,11 @@ portsNameSize=$7
 DATA=./SwitchData/tmp/temp.txt
 PORT_INFO=./SwitchData/tmp/switchPort.txt
 SWITCH_INFO=./SwitchData/tmp/switch.txt
+<<<<<<< HEAD
 SWITCH_RAW=./SwitchData/tmp/switchRaw.txt
+=======
+SWITCH_RAW=./SwitchData/Data/switchRaw.txt
+>>>>>>> b4792b1047006feeed2d9d239e7ada0dbd891975
 VLAN_INFO=./SwitchData/tmp/switchVlan.txt
 
 
@@ -39,7 +43,11 @@ cat $SWITCH_RAW > ./SwitchData/Data/$M_name/switchRaw.txt
 
 for ((i=0;i<$(expr ${#PORTS[@]});i++))
 do
+<<<<<<< HEAD
     echo -en "\rShow mac address-table ${PORTS[$i]}"
+=======
+    echo "Show mac address-table ${PORTS[$i]}"
+>>>>>>> b4792b1047006feeed2d9d239e7ada0dbd891975
     ./src/getData.sh $SERVER $USER $PASS $PROTOCOL "Show mac address-table interface ${PORTS[$i]}" > $DATA
     
     cat $DATA >> ./SwitchData/Data/$M_name/switchPortRaw.txt

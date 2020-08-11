@@ -41,8 +41,13 @@ RENDU=./Rendu/$M_name.csv
 
 
 # create the heading of the file
+<<<<<<< HEAD
 echo " ; Description ; Vlan ; Mac active ; Adresse IP ; Marque ; Hostname ; Service ; Contact ; Tel ; Nom " > $RENDU
 echo "$M_name ; $switch" >> $RENDU
+=======
+echo "$M_name ; $switch" >> $RENDU
+echo " ; Description ; Vlan ; Mac active ; Adresse IP ; Marque ; Hostname ; Service ; Contact ; Tel ; Nom " > $RENDU
+>>>>>>> b4792b1047006feeed2d9d239e7ada0dbd891975
 
 
 # print the formated data inside the file
