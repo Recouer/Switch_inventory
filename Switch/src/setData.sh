@@ -74,3 +74,7 @@ do
     echo " ${vlan[$i]} ; ${name[$i]} " >> $VLAN_INFO
 done
 
+
+cat ./SwitchData/tmp/switch.txt > ./SwitchData/Data/$M_name/switch.txt
+cat ./SwitchData/tmp/switchPort.txt > ./SwitchData/Data/$M_name/switchPort.txt
+cat ./SwitchData/tmp/switchVlan.txt > ./SwitchData/Data/$M_name/switchVlan.txt
