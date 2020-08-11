@@ -19,6 +19,6 @@ range:
 
 
 clean:
-	rm -fr *~ ./src/*~ ./SwitchData/tmp/* ./SwitchData/Data/* ./SwitchData/tmp/* ./Rendu/*
+	rm -fr *~ ./src/*~ ./SwitchData/tmp/* ./SwitchData/Data/* ./SwitchData/tmp/* ./Result/*
 
 	> feedMeSwitchs.txt

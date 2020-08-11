@@ -37,17 +37,12 @@ IFS=' '
 # create file where the formated data will be returned
 str="${name[-1]}"
 M_name="${str%\#*}"
-RENDU=./Rendu/$M_name.csv
+RESULT=./Result/$M_name.csv
 
 
 # create the heading of the file
-<<<<<<< HEAD
-echo " ; Description ; Vlan ; Mac active ; Adresse IP ; Marque ; Hostname ; Service ; Contact ; Tel ; Nom " > $RENDU
-echo "$M_name ; $switch" >> $RENDU
-=======
-echo "$M_name ; $switch" >> $RENDU
-echo " ; Description ; Vlan ; Mac active ; Adresse IP ; Marque ; Hostname ; Service ; Contact ; Tel ; Nom " > $RENDU
->>>>>>> b4792b1047006feeed2d9d239e7ada0dbd891975
+echo " ; Description ; Vlan ; Mac active ; Adresse IP ; Marque ; Hostname ; Service ; Contact ; Tel ; Nom " > $RESULT
+echo "$M_name ; $switch" >> $RESULT
 
 
 # print the formated data inside the file
@@ -58,14 +53,14 @@ do
     do
 	if [[ "${port[$i]}" == "${p_port[$j]}" ]]
 	then
-	    echo "${port[$i]} ; ${name[$i]:10} ; ${p_vlan[$j]} ; ${p_mac[$j]} ; ; ; ; ; ; ; ; ${status[$i]} ; ${duplex[$i]} ; ${speed[$i]} ; ${type[$i]}" >> $RENDU
+	    echo "${port[$i]} ; ${name[$i]:10} ; ${p_vlan[$j]} ; ${p_mac[$j]} ; ; ; ; ; ; ; ; ${status[$i]} ; ${duplex[$i]} ; ${speed[$i]} ; ${type[$i]}" >> $RESULT
 	    a=0
 	fi
     done
     if ((a)); then
-	echo "${port[$i]} ; ${name[$i]:10} ; ${vlan[$i]} ; ; ; ; ; ; ; ; ; ${status[$i]} ; ${duplex[$i]} ; ${speed[$i]} ; ${type[$i]}" >> $RENDU
+	echo "${port[$i]} ; ${name[$i]:10} ; ${vlan[$i]} ; ; ; ; ; ; ; ; ; ${status[$i]} ; ${duplex[$i]} ; ${speed[$i]} ; ${type[$i]}" >> $RESULT
     fi
 done
 
-echo " " >> $RENDU
-cat $SWITCH_VLAN >> $RENDU
+echo " " >> $RESULT
+cat $SWITCH_VLAN >> $RESULT

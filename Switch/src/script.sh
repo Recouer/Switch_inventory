@@ -16,11 +16,7 @@ pass=11061999Dam
 
 for protocol in ${protocols[@]}
 do
-<<<<<<< HEAD
     echo -e "\n$protocol"
-=======
-    echo $protocol
->>>>>>> b4792b1047006feeed2d9d239e7ada0dbd891975
     # get the ip addresses from the ./feedMeSwitchs.txt file in which the data will be
     # processed
     switchs=($(cat ./feedMeSwitchs.txt))
@@ -30,11 +26,7 @@ do
 	# check wether the user managed to connect to the switch using a given protocol
 	# and will act accordingly depending on the answer
 	check=$(./src/checkConnect.sh $switch $user $protocol)
-<<<<<<< HEAD
 	echo -e "\n$check $switch"
-=======
-	echo $check $switch
->>>>>>> b4792b1047006feeed2d9d239e7ada0dbd891975
 	case "$check" in
 	    "connectionAccepted")
 
