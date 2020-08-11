@@ -6,12 +6,10 @@ SWITCH=./SwitchData/tmp/switch.txt
 SWITCH_PORT=./SwitchData/tmp/switchPort.txt
 SWITCH_VLAN=./SwitchData/tmp/switchVlan.txt
 
-user=vanaertselaer.d
-pass=11061999Dam
 
 # prompt the user to identify themselves
-#read -p "username:" user
-#read -s -p "password:" pass
+read -p "username:" user
+read -s -p "password:" pass
 
 
 for protocol in ${protocols[@]}
@@ -37,15 +35,6 @@ do
 		SC=($(./src/getConfig.sh $switch $user $pass $protocol))
 		./src/setData.sh $switch $user $pass $protocol ${SC[1]} ${SC[2]} ${SC[3]}
 		./src/dataFormat.sh ${SC[0]} ${SC[1]} ${SC[2]} ${SC[3]}
-		
-		name=($(cut -b 1-$b $SWITCH))
-		str="${name[-1]}"
-		M_name="${str%\#*}"
-		
-
-		cat ./SwitchData/tmp/switch.txt > ./SwitchData/Data/$M_name/switch.txt
-		cat ./SwitchData/tmp/switchPort.txt > ./SwitchData/Data/$M_name/switchPort.txt
-		cat ./SwitchData/tmp/switchVlan.txt > ./SwitchData/Data/$M_name/switchVlan.txt
 		;;
 	
 	    "connectionRefused")
