@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-if [[ ! -z $3 ]]
+if [[ $3 == "TRUE" ]]
 then
     > ./feedMeSwitchs.txt
 fi
